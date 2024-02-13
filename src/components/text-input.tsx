@@ -1,6 +1,7 @@
 import { ChangeEventHandler, useCallback, useState } from "react";
 import { Label } from "./label";
 import { Cambay } from "next/font/google";
+import { TextInputProps } from "@/utils/types";
 
 export function TextInput({
   initialValue,
@@ -11,6 +12,7 @@ export function TextInput({
   name,
   label,
   type = "text",
+  error,
 }: TextInputProps) {
   const [value, setValue] = useState(initialValue ? initialValue : "");
 
@@ -37,8 +39,11 @@ export function TextInput({
         onChange={callBack}
         placeholder={placeholder}
         required={required}
-        className=" border-gray-300 border shadow-sm px-3 py-2 rounded-md"
+        className={` shadow-sm px-3 py-2 rounded-md ${
+          error ? "border-red-500 border-2" : "border-gray-300 border"
+        }`}
       />
+      {error ? <p className=" text-red-500">Erreur: {error}</p> : ""}
     </div>
   );
 }

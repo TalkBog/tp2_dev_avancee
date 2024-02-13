@@ -1,5 +1,6 @@
 import { ChangeEventHandler, useCallback, useState } from "react";
 import { Label } from "./label";
+import { CheckboxInputProps } from "@/utils/types";
 
 export function CheckboxInput({
   label,

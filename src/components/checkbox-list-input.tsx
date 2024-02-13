@@ -1,3 +1,4 @@
+import { CheckboxListInputProps } from "@/utils/types";
 import { CheckboxInput } from "./checkbox-input";
 
 export function CheckboxListInput({

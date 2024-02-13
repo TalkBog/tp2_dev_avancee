@@ -1,6 +1,7 @@
 import { MouseEventHandler, useCallback, useState } from "react";
 import { Eye, EyeClosed } from "@phosphor-icons/react/dist/ssr";
 import { TextInput } from "./text-input";
+import { PasswordInputProps } from "@/utils/types";
 
 export function PasswordInput({
   initialValue,
@@ -12,6 +13,7 @@ export function PasswordInput({
   name,
   type,
   show,
+  error,
 }: PasswordInputProps) {
   const [showed, setShowed] = useState(show ?? false);
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -22,7 +24,11 @@ export function PasswordInput({
     [showed]
   );
   return (
-    <div className="flex flex-row gap-3 items-end justify-end w-full">
+    <div
+      className={`flex flex-row gap-3 ${
+        error ? "items-center" : "items-end"
+      } w-full`}
+    >
       <TextInput
         id={id}
         name={name}
@@ -32,6 +38,7 @@ export function PasswordInput({
         placeholder={placeholder}
         type={showed ? "text" : "password"}
         onChange={onChange}
+        error={error}
       />
       <button
         onClick={handleClick}

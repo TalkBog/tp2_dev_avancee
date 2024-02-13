@@ -2,16 +2,23 @@
 import { Code } from "@/components/code";
 import { PasswordInput } from "@/components/password-input";
 import { TextInput } from "@/components/text-input";
-import { ChangeEventHandler, FormEventHandler, useId, useState } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useCallback,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 
 export default function Home() {
-  const [formValues, setFormValues] = useState<formData>({
+  const [formValues, setFormValues] = useState<FormDataInput>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
-  const [inputValues, setInputValues] = useState<formData>({
+  const [inputValues, setInputValues] = useState<FormDataInput>({
     firstName: "",
     lastName: "",
     email: "",
@@ -22,26 +29,26 @@ export default function Home() {
     e.preventDefault();
     const inputs = e.currentTarget.elements;
     const values = {
-      firstName: inputs["firstName"].value,
-      lastName: inputs["lastName"].value,
-      email: inputs["email"].value,
-      password: inputs["password"].value,
+      ...inputValues,
     };
+    values["firstName"] = (
+      inputs.namedItem("firstName") as HTMLInputElement
+    )?.value;
+    values["lastName"] = (
+      inputs.namedItem("lastName") as HTMLInputElement
+    )?.value;
+    values["email"] = (inputs.namedItem("email") as HTMLInputElement)?.value;
+    values["password"] = (
+      inputs.namedItem("password") as HTMLInputElement
+    ).value;
 
     setFormValues(values);
   };
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    e.preventDefault();
-    const inputs = e;
-    const values = {
-      firstName: inputs["firstName"].value,
-      lastName: inputs["lastName"].value,
-      email: inputs["email"].value,
-      password: inputs["password"].value,
-    };
-
-    setFormValues(values);
+  const handleChange = (input: keyof FormDataInput, value: string) => {
+    const values = { ...inputValues };
+    values[input] = value;
+    setInputValues(values);
   };
 
   return (
@@ -61,12 +68,14 @@ export default function Home() {
               label="Prénom"
               name="firstName"
               placeholder="Votre Prénom ..."
+              onChange={(value) => handleChange("firstName", value)}
             />
             <TextInput
               id={useId()}
               label="Nom"
               name="lastName"
               placeholder="Votre Nom ..."
+              onChange={(value) => handleChange("lastName", value)}
             />
           </div>
           <TextInput
@@ -75,12 +84,14 @@ export default function Home() {
             label="Adresse E-mail"
             name="email"
             placeholder="Votre Email ..."
+            onChange={(value) => handleChange("email", value)}
           />
           <PasswordInput
             id={useId()}
             label="Mot de passe"
             name="password"
             placeholder="Votre Mot de passe ..."
+            onChange={(value) => handleChange("password", value)}
           />
           <div className="flex items-end w-full justify-end">
             <button className="px-3 mt-5 py-3 rounded-md shadow-sm bg-orange-400 text-white font-bold text-lg w-40 hover:bg-orange-500 transition-colors duration-200">
@@ -89,8 +100,9 @@ export default function Home() {
           </div>
         </form>
       </section>
-      <section>
+      <section className="flex flex-row w-full justify-around">
         <Code label="formValues">{formValues}</Code>
+        <Code label="inputValues">{inputValues}</Code>
       </section>
     </main>
   );
