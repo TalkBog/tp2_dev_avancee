@@ -9,6 +9,7 @@ export function PasswordInput({
   required,
   id,
   label,
+  name,
   type,
   show,
 }: PasswordInputProps) {
@@ -24,6 +25,7 @@ export function PasswordInput({
     <div className="flex flex-row gap-3 items-end justify-end w-full">
       <TextInput
         id={id}
+        name={name}
         initialValue={initialValue}
         label={label}
         required={required}
@@ -33,7 +35,7 @@ export function PasswordInput({
       />
       <button
         onClick={handleClick}
-        className="border-gray-300 border shadow-sm rounded-md flex items-center justify-center p-2"
+        className="border-gray-300 border shadow-sm rounded-md flex items-center justify-center p-2 bg-orange-400 hover:bg-orange-500 transition-color text-white"
       >
         {showed ? <Eye size={25} /> : <EyeClosed size={25} />}
       </button>

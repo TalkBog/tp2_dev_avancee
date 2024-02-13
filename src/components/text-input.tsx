@@ -8,6 +8,7 @@ export function TextInput({
   onChange,
   required,
   id,
+  name,
   label,
   type = "text",
 }: TextInputProps) {
@@ -30,6 +31,7 @@ export function TextInput({
       <Label id={id} label={label} required={required} />
       <input
         id={id}
+        name={name}
         type={type}
         value={value}
         onChange={callBack}

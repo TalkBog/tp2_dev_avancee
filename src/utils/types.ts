@@ -8,13 +8,14 @@ type TextInputProps = LabelProps & {
     initialValue?:  string;
     placeholder ?:  string;
     onChange    ?:  (value: string) => void;
-    type ?: "text" | "password"
+    type        ?:  "text" | "password" | "email"
+    name        ?:   string
 };
 
 type CheckboxInputProps = LabelProps & {
     checked     ?:  boolean,
     onChange    ?:  (value: boolean) => void;
-    name ?: string
+    name        ?:  string
 }
 
 type CheckboxListInputProps<T = Record<string,string>> = {
@@ -25,5 +26,12 @@ type CheckboxListInputProps<T = Record<string,string>> = {
 }
 
 type PasswordInputProps = TextInputProps & {
-    show ?: boolean
+    show    ?:  boolean
 }
+
+type formData = {
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  }
